@@ -38,7 +38,7 @@
 
         .grid-gallery-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; width: 100%; }
         .grid-item-card { display: flex; flex-direction: column; background: #121212; border: 1px solid #262626; border-radius: 4px; overflow: hidden; position: relative; }
-        .grid-item-box { position: relative; aspect-ratio: 1; background-color: #0a0a0f; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .grid-item-box { position: relative; aspect-ratio: 1; background-color: #0a0a0f; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer; }
         .grid-item-box img, .grid-item-box video { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
         
         .close-icon { position: absolute; top: 12px; right: 12px; background: rgba(255, 71, 87, 0.95); color: white; border: none; border-radius: 50%; width: 32px; height: 32px; font-weight: bold; cursor: pointer; z-index: 20; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.5); }
@@ -50,8 +50,8 @@
         .cmt-input-bar button { background: none; border: none; color: #0095f6; font-weight: 600; cursor: pointer; }
 
         .modal { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.98); align-items: center; justify-content: center; }
-        .modal-content { max-width: 95%; max-height: 85%; object-fit: contain; border-radius: 6px; box-shadow: 0 4px 20px rgba(255,255,255,0.1); }
-        .close-btn { position: absolute; top: 20px; right: 25px; color: #ffffff; font-size: 45px; font-weight: bold; cursor: pointer; user-select: none; }
+        .modal-content { max-width: 95%; max-height: 85%; object-fit: contain; border-radius: 6px; }
+        .close-btn { position: absolute; top: 20px; right: 25px; color: #ffffff; font-size: 45px; font-weight: bold; cursor: pointer; }
 
         @media (max-width: 768px) { .insta-controls-grid { grid-template-columns: 1fr; } .grid-gallery-container { grid-template-columns: repeat(3, 1fr); gap: 4px; } }
     </style>
@@ -72,7 +72,7 @@
         <div class="insta-controls-grid">
             <div class="control-card-box">
                 <h3>Share Public Post</h3>
-                <form id="uploadFormEngine" onsubmit="handleBatchUpload(event)">
+                <form onsubmit="handleBatchUpload(event)">
                     <div class="form-group">
                         <label>Select Folder/Stream</label>
                         <select id="target_gallery_select"></select>
@@ -139,7 +139,7 @@
             const grid = document.getElementById("feed_grid_display");
             grid.innerHTML = "";
             
-            // Filter out items that are NOT private
+            // STRICT FILTER: Sirf public items dikhayega
             const activeItems = store.items.filter(item => item.folder === store.activeFolder && !item.isPrivate);
 
             if (activeItems.length === 0) {
@@ -226,7 +226,7 @@
                             folder: selectedFolder,
                             url: directUrl,
                             isVideo: file.type.startsWith('video/'),
-                            isPrivate: false, // Public Item Flag
+                            isPrivate: false,
                             comments: []
                         });
                     }
@@ -276,7 +276,7 @@
 
         function deleteItem(event, id) {
             event.stopPropagation();
-            if (confirm("Are you sure you want to delete this post from website?")) {
+            if (confirm("Delete this post from website?")) {
                 store.items = store.items.filter(item => item.id !== id);
                 saveToStorage();
             }
@@ -295,7 +295,7 @@
         }
 
         function wipeLocalDatabase() {
-            if (confirm("Wipe all local website mappings? Telegram cloud will remain safe.")) {
+            if (confirm("Wipe all local website mappings?")) {
                 localStorage.removeItem('zerogram_db');
                 store = { folders: ["Main Gallery", "Samsung", "System_E"], activeFolder: "Main Gallery", items: [] };
                 renderUI();
@@ -306,3 +306,4 @@
     </script>
 </body>
 </html>
+
