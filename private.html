@@ -8,13 +8,11 @@
         body { font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #050505; color: #f5f5f5; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
         .insta-wrapper { max-width: 935px; width: 100%; padding: 30px 20px; box-sizing: border-box; width: 100%; }
         
-        /* LOCK SCREEN STYLES */
         .lock-container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; width: 100%; box-sizing: border-box; padding: 20px; }
         .lock-box { background: #121212; border: 1px solid #262626; border-radius: 12px; padding: 35px; text-align: center; max-width: 400px; width: 100%; box-shadow: 0 10px 25px rgba(0,0,0,0.5); box-sizing: border-box; }
         .lock-box h2 { margin-top: 0; color: #ff4757; margin-bottom: 20px; }
         .pin-input { background: #000; border: 1px solid #363636; border-radius: 6px; padding: 12px; width: 100%; color: white; text-align: center; font-size: 1.5rem; letter-spacing: 5px; outline: none; margin-bottom: 15px; box-sizing: border-box; }
         
-        /* VAULT STYLES */
         .vault-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #262626; padding-bottom: 20px; margin-bottom: 20px; gap: 10px; }
         .vault-header h1 { margin: 0; color: #ff4757; font-size: 1.8rem; display: flex; align-items: center; gap: 10px; }
         
@@ -225,7 +223,7 @@
                             folder: "Private Vault",
                             url: directUrl,
                             isVideo: file.type.startsWith('video/'),
-                            isPrivate: true, // Private Item Flag
+                            isPrivate: true,
                             comments: []
                         });
                     }
@@ -287,3 +285,4 @@
     </script>
 </body>
 </html>
+
