@@ -5,102 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zerogram Private Vault</title>
     <style>
-        body { font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #050505; color: #f5f5f5; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
-        .insta-wrapper { max-width: 600px; width: 100%; padding: 30px 15px; box-sizing: border-box; width: 100%; }
+        body { font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #09090b; color: #e4e4e7; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .vault-container { max-width: 600px; width: 100%; padding: 25px 15px; box-sizing: border-box; }
         
-        .lock-container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; width: 100%; box-sizing: border-box; padding: 20px; }
-        .lock-box { background: #121212; border: 1px solid #262626; border-radius: 12px; padding: 35px; text-align: center; max-width: 400px; width: 100%; box-shadow: 0 10px 25px rgba(0,0,0,0.5); box-sizing: border-box; }
-        .lock-box h2 { margin-top: 0; color: #ff4757; margin-bottom: 20px; }
-        .pin-input { background: #000; border: 1px solid #363636; border-radius: 6px; padding: 12px; width: 100%; color: white; text-align: center; font-size: 1.5rem; letter-spacing: 5px; outline: none; margin-bottom: 15px; box-sizing: border-box; }
+        .auth-shield { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; width: 100%; padding: 20px; box-sizing: border-box; }
+        .auth-box { background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 40px 30px; text-align: center; max-width: 380px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.6); box-sizing: border-box; }
+        .auth-box h2 { font-size: 1.4rem; color: #ef4444; margin: 0 0 10px 0; font-weight: 700; }
+        .auth-box p { font-size: 0.85rem; color: #a1a1aa; margin: 0 0 25px 0; }
+        .pin-field { background: #09090b; border: 1px solid #27272a; border-radius: 8px; padding: 14px; width: 100%; color: white; text-align: center; font-size: 1.6rem; font-weight: bold; letter-spacing: 6px; outline: none; margin-bottom: 20px; box-sizing: border-box; }
         
-        .vault-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #262626; padding-bottom: 20px; margin-bottom: 20px; gap: 10px; }
-        .vault-header h1 { margin: 0; color: #ff4757; font-size: 1.6rem; display: flex; align-items: center; gap: 10px; }
+        .vault-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #27272a; padding-bottom: 20px; margin-bottom: 25px; }
+        .vault-header h1 { margin: 0; color: #ef4444; font-size: 1.5rem; font-weight: 700; }
         
-        .btn-insta { background-color: #ff4757; color: white; border: none; padding: 10px 20px; font-size: 0.9rem; font-weight: 600; border-radius: 4px; cursor: pointer; text-align: center; }
-        .btn-insta:hover { background-color: #ff2e44; }
-        .btn-secondary-insta { background-color: #121212; color: #fff; border: 1px solid #363636; padding: 9px 16px; text-decoration: none; font-size: 0.9rem; font-weight: 600; border-radius: 4px; display: inline-block; }
+        .btn-action { background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; padding: 12px 24px; font-size: 0.9rem; font-weight: 600; border-radius: 8px; cursor: pointer; width: 100%; }
+        .btn-outline { background: #18181b; color: #fff; border: 1px solid #27272a; padding: 10px 16px; text-decoration: none; font-size: 0.85rem; font-weight: 600; border-radius: 8px; display: inline-block; }
 
-        .settings-panel { background: #121212; border: 1px solid #262626; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; flex-direction: row; gap: 15px; align-items: center; justify-content: space-between; }
-        .upload-box { background: #121212; border: 1px dashed #363636; padding: 25px; border-radius: 8px; margin-bottom: 30px; text-align: center; }
-        .file-input { background: #000; padding: 10px; border: 1px solid #262626; color: white; border-radius: 4px; margin-bottom: 10px; cursor: pointer; }
+        .settings-bar { background: #18181b; border: 1px solid #27272a; padding: 16px; border-radius: 12px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; }
+        .upload-area { background: #18181b; border: 2px dashed #3f3f46; padding: 30px 20px; border-radius: 16px; margin-bottom: 30px; text-align: center; }
+        .file-selector { background: #09090b; padding: 10px; border: 1px solid #27272a; color: white; border-radius: 8px; margin-bottom: 15px; cursor: pointer; }
 
-        .progress-container { display: none; margin-top: 15px; background: #262626; border-radius: 4px; overflow: hidden; position: relative; height: 20px; }
-        .progress-bar-fill { background: linear-gradient(45deg, #ff4757, #ff8da1); width: 0%; height: 100%; }
-        .progress-text { position: absolute; top: 0; left: 50%; transform: translateX(-50%); font-size: 0.75rem; font-weight: bold; color: #fff; line-height: 20px; }
+        .progress-box { display: none; background: #09090b; border: 1px solid #27272a; border-radius: 8px; padding: 12px; position: relative; overflow: hidden; margin-top: 10px; }
+        .progress-bar { background: linear-gradient(90deg, #ef4444, #f43f5e); width: 0%; height: 4px; position: absolute; bottom: 0; left: 0; }
 
-        .long-gallery-container { display: flex; flex-direction: column; gap: 35px; width: 100%; }
-        .grid-item-card { display: flex; flex-direction: column; background: #000000; border: 1px solid #262626; border-radius: 8px; overflow: hidden; position: relative; width: 100%; }
+        .feed-stream { display: flex; flex-direction: column; gap: 25px; width: 100%; }
+        .asset-card { background: #18181b; border: 1px solid #27272a; border-radius: 16px; overflow: hidden; position: relative; width: 100%; }
+        .media-container { position: relative; width: 100%; background: #09090b; display: flex; align-items: center; justify-content: center; cursor: pointer; touch-action: pan-y; min-height: 150px; }
+        .media-container img, .media-container video { width: 100%; height: auto; max-height: 70vh; object-fit: contain; }
         
-        .grid-item-box { position: relative; width: 100%; background-color: #0a0a0f; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer; touch-action: pan-y; }
-        .grid-item-box img, .grid-item-box video { width: 100%; height: auto; max-height: 75vh; object-fit: contain; pointer-events: none; }
+        .doc-luxury-box { padding: 45px 25px; background: linear-gradient(135deg, #451a03, #1c1917); border-bottom: 1px solid #27272a; width: 100%; box-sizing: border-box; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+        .doc-badge { background: #ef4444; color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+
+        .delete-btn-badge { position: absolute; top: 12px; right: 12px; background: rgba(9, 9, 11, 0.75); color: #f43f5e; border: 1px solid #27272a; border-radius: 50%; width: 32px; height: 32px; font-size: 1.1rem; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; }
+        .vault-footer { padding: 14px; background: #18181b; font-size: 0.85rem; font-weight: 600; color: #ef4444; }
+
+        .lightbox { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(9,9,11,0.96); align-items: center; justify-content: center; }
+        .lightbox-content { max-width: 85%; max-height: 85%; object-fit: contain; border-radius: 4px; }
         
-        .doc-box-view { padding: 40px 20px; background: linear-gradient(135deg, #2e1e1e, #151212); border: 1px solid #3d2121; border-radius: 6px; width: 100%; box-sizing: border-box; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-        .doc-icon-svg { font-size: 3.5rem; }
-        .doc-filename { font-size: 1rem; font-weight: bold; color: #ffffff; word-break: break-all; max-width: 90%; }
-        .doc-download-label { font-size: 0.85rem; color: #ff4757; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-
-        .close-icon { position: absolute; top: 12px; right: 12px; background: rgba(0, 0, 0, 0.7); color: white; border: 1px solid #363636; border-radius: 50%; width: 32px; height: 32px; font-weight: bold; cursor: pointer; z-index: 20; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; }
-        .private-footer { padding: 12px; background: #000000; border-top: 1px solid #1c1c1c; font-size: 0.9rem; font-weight: bold; color: #ff4757; }
-
-        .modal { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.95); align-items: center; justify-content: center; }
-        .modal-content { max-width: 85%; max-height: 85%; object-fit: contain; border-radius: 4px; }
-        .close-btn { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; }
+        .loading-shimmer { background: linear-gradient(90deg, #18181b 25%, #27272a 50%, #18181b 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; width: 100%; height: 250px; display: flex; align-items: center; justify-content: center; color: #71717a; font-size: 0.85rem; font-weight: 500; }
     </style>
 </head>
 <body>
 
-    <div id="lockScreen" class="lock-container">
-        <div class="lock-box">
-            <h2>🔒 Private Lock</h2>
-            <input type="password" id="pinInput" class="pin-input" placeholder="••••" maxlength="8">
-            <button class="btn-insta" style="width: 100%; margin-bottom: 15px;" onclick="verifyPin()">Unlock Vault</button>
-            <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
-                <a href="index.html" style="color: #8e8e8e; text-decoration: none;">← Exit</a>
-                <a href="#" onclick="forgetPassword()" style="color: #ff4757; text-decoration: none;">Forget Password?</a>
+    <!-- LOCK SCREEN SCREEN -->
+    <div id="lockScreen" class="auth-shield">
+        <div class="auth-box">
+            <h2>Secure Protocol</h2>
+            <p>Vault partition encryption enabled.</p>
+            <input type="password" id="pinInput" class="pin-field" placeholder="••••" maxlength="8">
+            <button class="btn-action" style="width: 100%; margin-bottom: 20px;" onclick="verifyPin()">Decrypt Drive</button>
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                <a href="index.html" style="color: #71717a; text-decoration: none;">← Exit Terminal</a>
+                <a href="#" onclick="forgetPassword()" style="color: #ef4444; text-decoration: none;">Reset Vault Matrix</a>
             </div>
         </div>
     </div>
 
-    <div class="insta-wrapper" id="vaultContent" style="display: none;">
+    <!-- MAIN VAULT VAULT CONTAINER -->
+    <div class="vault-container" id="vaultContent" style="display: none;">
         <div class="vault-header">
-            <h1>🔒 Private Vault</h1>
-            <a href="index.html" class="btn-secondary-insta">← Back to Public</a>
+            <h1>🔒 Encrypted Partition</h1>
+            <a href="index.html" class="btn-outline">← Back to Public</a>
         </div>
 
-        <div class="settings-panel">
-            <span style="font-weight: 600; color: #a8a8a8;">Settings:</span>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-secondary-insta" style="padding: 6px 12px; font-size: 0.8rem;" onclick="changePassword()">⚙️ Change PIN</button>
-                <button class="btn-secondary-insta" style="padding: 6px 12px; font-size: 0.8rem; border-color: #ff4757; color: #ff4757;" onclick="lockVaultInstant()">🔒 Lock</button>
+        <div class="settings-bar">
+            <span style="font-weight: 600; color: #a1a1aa; font-size: 0.85rem;">Security Token Profile</span>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn-outline" style="padding: 6px 12px; font-size: 0.8rem;" onclick="changePassword()">⚙️ Change PIN</button>
+                <button class="btn-outline" style="padding: 6px 12px; font-size: 0.8rem; border-color: #ef4444; color: #ef4444;" onclick="lockVaultInstant()">🔒 Lock</button>
             </div>
         </div>
 
-        <div class="upload-box">
+        <div class="upload-area">
             <form onsubmit="handlePrivateUpload(event)">
-                <input type="file" id="private_file_input" class="file-input" multiple required><br>
-                <button type="submit" class="btn-insta" style="padding: 10px 25px;">Upload Privately</button>
+                <input type="file" id="private_file_input" class="file-selector" multiple required><br>
+                <button type="submit" class="btn-action" style="padding: 12px 35px;">Upload Secure Payload</button>
             </form>
-            <div class="progress-container" id="p_container">
-                <div class="progress-bar-fill" id="p_fill"></div>
-                <div class="progress-text" id="p_text">0%</div>
+            <div class="progress-box" id="p_container">
+                <div style="display:flex; justify-content:space-between; font-size: 0.8rem; color:#a1a1aa; margin-bottom: 5px;">
+                    <span id="p_text">Uploading...</span>
+                    <span id="p_percent">0%</span>
+                </div>
+                <div class="progress-bar" id="p_fill"></div>
             </div>
         </div>
 
-        <div class="long-gallery-container" id="private_grid_display"></div>
+        <div class="feed-stream" id="private_grid_display"></div>
     </div>
 
-    <div id="photoModal" class="modal" onclick="closeView()">
-        <span class="close-btn" onclick="closeView()">&times;</span>
-        <img class="modal-content" id="fullImage" style="display:none;" onclick="event.stopPropagation()">
-        <video class="modal-content" id="fullVideo" controls style="display:none;" onclick="event.stopPropagation()"></video>
+    <!-- LIGHTBOX -->
+    <div id="photoModal" class="lightbox" onclick="closeView()">
+        <span style="position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer;">&times;</span>
+        <img class="lightbox-content" id="fullImage" style="display:none;" onclick="event.stopPropagation()">
+        <video class="lightbox-content" id="fullVideo" controls style="display:none;" onclick="event.stopPropagation()"></video>
     </div>
 
     <script>
         const BOT_TOKEN = "8877412628:AAHeZgC78XtddVqrg-Z75401IUCVRnQgH4c";
-        const CHANNEL_ID = "-1004438175078";
         const RECOVERY_CODE = "2648";
 
         let store = JSON.parse(localStorage.getItem('zerogram_db')) || { folders: ["Main Gallery"], activeFolder: "Main Gallery", items: [] };
+        let resolvedUrls = {};
         
         if (!store.vaultPin) {
             store.vaultPin = "1234";
@@ -115,28 +119,42 @@
                 document.getElementById("pinInput").value = "";
                 renderPrivateUI();
             } else {
-                alert("Wrong PIN!");
+                alert("Decryption Matrix Failed. Access Denied.");
                 document.getElementById("pinInput").value = "";
             }
         }
 
+        async function fetchLiveUrl(fileId) {
+            if (resolvedUrls[fileId]) return resolvedUrls[fileId];
+            try {
+                let r = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${fileId}`);
+                let fileInfo = await r.json();
+                if (fileInfo.ok) {
+                    let path = `https://api.telegram.org/file/bot${BOT_TOKEN}/${fileInfo.result.file_path}`;
+                    resolvedUrls[fileId] = path;
+                    return path;
+                }
+            } catch (e) { console.error(e); }
+            return null;
+        }
+
         function changePassword() {
             const current = prompt("Enter Current PIN:");
-            if (current !== store.vaultPin) { alert("Incorrect!"); return; }
-            const newPin = prompt("Enter New PIN:");
+            if (current !== store.vaultPin) { alert("Auth Failure!"); return; }
+            const newPin = prompt("Enter New Matrix PIN:");
             if (!newPin || isNaN(newPin)) { alert("Invalid!"); return; }
             store.vaultPin = newPin.trim();
             localStorage.setItem('zerogram_db', JSON.stringify(store));
-            alert("Changed!");
+            alert("Matrix Changed Successfully!");
             lockVaultInstant();
         }
 
         function forgetPassword() {
-            const check = prompt("Enter recovery code:");
+            const check = prompt("Enter Master Identity Recovery Code:");
             if (check === RECOVERY_CODE) {
                 store.vaultPin = "1234";
                 localStorage.setItem('zerogram_db', JSON.stringify(store));
-                alert("Reset to 1234");
+                alert("Emergency Reset Executed. Default PIN: 1234");
                 document.getElementById("pinInput").value = "1234";
             }
         }
@@ -146,41 +164,55 @@
             document.getElementById("lockScreen").style.display = "flex";
         }
 
-        function renderPrivateUI() {
+        async function renderPrivateUI() {
             const grid = document.getElementById("private_grid_display");
             grid.innerHTML = "";
             const privateItems = store.items.filter(item => item.isPrivate === true);
 
             if (privateItems.length === 0) {
-                grid.innerHTML = `<div style="text-align:center; padding:40px; color:#8e8e8e;">No Private Posts Yet.</div>`;
+                grid.innerHTML = `<div style="text-align:center; padding:40px; color:#71717a; font-size:0.9rem;">Secure partition empty.</div>`;
                 return;
             }
 
             privateItems.forEach(item => {
-                let mediaHTML = "";
-                
-                if (item.isDoc) {
-                    mediaHTML = `
-                        <div class="doc-box-view">
-                            <div class="doc-icon-svg">📄</div>
-                            <div class="doc-filename">${item.docName || 'Document Asset'}</div>
-                            <div class="doc-download-label">🔒 Safe Vault Download</div>
-                        </div>`;
-                } else if (item.isVideo) {
-                    mediaHTML = `<video src="${item.url}" muted loop playsinline></video>`;
-                } else {
-                    mediaHTML = `<img src="${item.url}">`;
-                }
-
-                let totalViews = item.views || 0;
-
                 grid.innerHTML += `
-                    <div class="grid-item-card">
-                        <button class="close-icon" onclick="deletePrivateItem(event, '${item.id}')">&times;</button>
-                        <div class="grid-item-box" onclick="registerPrivateView('${item.id}', '${item.url}', ${item.isVideo || false}, ${item.isDoc || false})">${mediaHTML}</div>
-                        <div class="private-footer">🔒 Secret Item — 👁️ ${totalViews} views</div>
+                    <div class="asset-card" id="card-${item.id}">
+                        <button class="delete-btn-badge" onclick="deletePrivateItem(event, '${item.id}')">&times;</button>
+                        <div class="media-container" id="media-box-${item.id}">
+                            <div class="loading-shimmer">🔒 Syncing Secret Token Vector...</div>
+                        </div>
+                        <div class="vault-footer">🔒 Protected Block Mapping — 👁️ ${item.views || 0} Terminal Reads</div>
                     </div>`;
             });
+
+            for (let item of privateItems) {
+                let liveUrl = await fetchLiveUrl(item.fileId);
+                let mediaBox = document.getElementById(`media-box-${item.id}`);
+                
+                if (!mediaBox) continue;
+
+                if (!liveUrl) {
+                    mediaBox.innerHTML = `<div style="padding:30px; color:#f43f5e; font-size:0.85rem; font-weight:600;">⚠️ Connection Lost. Re-upload payload.</div>`;
+                    continue;
+                }
+
+                let innerHTML = "";
+                if (item.isDoc) {
+                    innerHTML = `
+                        <div class="doc-luxury-box">
+                            <div class="doc-badge">Encrypted Doc</div>
+                            <div style="font-size:1.05rem; font-weight:600; color:#fff; word-break:break-all; max-width:85%;">${item.docName || 'Payload Asset'}</div>
+                            <div style="font-size:0.85rem; color:#f87171; font-weight:500;">🔒 Secure Stream Pull</div>
+                        </div>`;
+                } else if (item.isVideo) {
+                    innerHTML = `<video src="${liveUrl}" muted loop playsinline></video>`;
+                } else {
+                    innerHTML = `<img src="${liveUrl}">`;
+                }
+                
+                mediaBox.innerHTML = innerHTML;
+                mediaBox.onclick = () => registerPrivateView(item.id, liveUrl, item.isVideo || false, item.isDoc || false);
+            }
         }
 
         function registerPrivateView(id, url, isVideo, isDoc) {
@@ -190,12 +222,8 @@
                 localStorage.setItem('zerogram_db', JSON.stringify(store));
                 renderPrivateUI();
             }
-            
-            if (isDoc) {
-                window.open(url, '_blank');
-            } else {
-                openView(url, isVideo);
-            }
+            if (isDoc) { window.open(url, '_blank'); } 
+            else { openView(url, isVideo); }
         }
 
         function openView(url, isVideo) {
@@ -225,28 +253,32 @@
             const pContainer = document.getElementById("p_container");
             const pFill = document.getElementById("p_fill");
             const pText = document.getElementById("p_text");
+            const pPercent = document.getElementById("p_percent");
 
             pContainer.style.display = "block";
 
             for (let i = 0; i < total; i++) {
                 const file = files[i];
-                pText.innerText = `Vaulting ${i + 1}/${total}`;
+                pText.innerText = `Vaulting Vector [${i+1}/${total}]`;
 
                 const isPhoto = file.type.startsWith('image/');
                 const isVideo = file.type.startsWith('video/');
                 const isDoc = !isPhoto && !isVideo;
 
                 try {
-                    const directUrl = await uploadToTelegramEngine(file, isPhoto, isVideo, (percent) => {
+                    let uploadRes = await uploadToTelegramEngine(file, isPhoto, isVideo, (percent) => {
                         let overall = Math.round(((i / total) * 100) + (percent / total));
                         pFill.style.width = overall + "%";
+                        pPercent.innerText = overall + "%";
                     });
 
-                    if (directUrl) {
+                    if (uploadRes && uploadRes.fileId) {
+                        resolvedUrls[uploadRes.fileId] = uploadRes.initialPath;
+                        
                         store.items.unshift({
                             id: 'item_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
                             folder: "Private Vault",
-                            url: directUrl,
+                            fileId: uploadRes.fileId, // 👉 STORES PERMANENT FILE ID INDEX NOW
                             isVideo: isVideo,
                             isDoc: isDoc,
                             docName: file.name,
@@ -255,7 +287,7 @@
                             comments: []
                         });
                     }
-                } catch (err) { alert(`Failed`); }
+                } catch (err) { alert(`Pipeline Sync Failure`); }
             }
             pContainer.style.display = "none";
             fileInput.value = "";
@@ -274,7 +306,7 @@
                 const url = `https://api.telegram.org/bot${BOT_TOKEN}/${method}`;
                 const xhr = new XMLHttpRequest();
                 const formData = new FormData();
-                formData.append("chat_id", CHANNEL_ID);
+                formData.append("chat_id", "-1004438175078");
                 formData.append(paramName, file);
 
                 xhr.upload.addEventListener("progress", (e) => {
@@ -294,8 +326,12 @@
                                 fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${fileId}`)
                                     .then(r => r.json())
                                     .then(fileInfo => {
-                                        if (fileInfo.ok) resolve(`https://api.telegram.org/file/bot${BOT_TOKEN}/${fileInfo.result.file_path}`);
-                                        else resolve(null);
+                                        if (fileInfo.ok) {
+                                            resolve({
+                                                fileId: fileId,
+                                                initialPath: `https://api.telegram.org/file/bot${BOT_TOKEN}/${fileInfo.result.file_path}`
+                                            });
+                                        } else resolve(null);
                                     }).catch(() => resolve(null));
                             } else { resolve(null); }
                         } else { reject(xhr.statusText); }
@@ -307,7 +343,7 @@
 
         function deletePrivateItem(event, id) {
             event.stopPropagation();
-            if (confirm("Delete?")) {
+            if (confirm("Purge secure item mapping?")) {
                 store.items = store.items.filter(item => item.id !== id);
                 localStorage.setItem('zerogram_db', JSON.stringify(store));
                 renderPrivateUI();
