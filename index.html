@@ -3,120 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zerogram Feed</title>
+    <title>Zerogram Premium Cloud</title>
     <style>
-        body { font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #000000; color: #f5f5f5; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
-        .insta-wrapper { max-width: 600px; width: 100%; padding: 30px 15px; box-sizing: border-box; }
-        .insta-profile-header { display: flex; align-items: center; gap: 25px; padding-bottom: 30px; border-bottom: 1px solid #262626; margin-bottom: 20px; }
-        .profile-avatar-circle { width: 80px; height: 80px; background: linear-gradient(45deg, #f9ce34, #ee2a7b, #6228d7); border-radius: 50%; padding: 3px; display: flex; align-items: center; justify-content: center; }
-        .profile-avatar-inner { width: 100%; height: 100%; background: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; color: #ff8da1; }
-        .profile-info-data { flex-grow: 1; display: flex; flex-direction: column; gap: 8px; }
-        .profile-top-line { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-        .profile-top-line h1 { font-size: 1.4rem; font-weight: 300; margin: 0; color: #ffffff; }
+        body { font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background-color: #0b0b0e; color: #e4e4e7; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .drive-container { max-width: 650px; width: 100%; padding: 25px 15px; box-sizing: border-box; }
         
-        .insta-controls-grid { display: flex; flex-direction: column; gap: 20px; margin-bottom: 30px; }
-        .control-card-box { background: #121212; border: 1px solid #262626; border-radius: 8px; padding: 20px; box-sizing: border-box; }
-        .control-card-box h3 { margin-top: 0; font-size: 0.9rem; color: #8e8e8e; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 15px; border-bottom: 1px solid #262626; padding-bottom: 8px; }
-        .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
-        .form-group label { font-size: 0.85rem; color: #a8a8a8; font-weight: 600; }
-        .form-group input, .form-group select { background: #000; border: 1px solid #363636; padding: 9px; color: white; border-radius: 4px; font-size: 0.9rem; outline: none; width: 100%; box-sizing: border-box; }
+        .premium-header { background: linear-gradient(135deg, #18181b, #09090b); border: 1px solid #27272a; border-radius: 16px; padding: 24px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+        .profile-section { display: flex; align-items: center; gap: 16px; }
+        .avatar-glow { width: 56px; height: 56px; background: linear-gradient(135deg, #3b82f6, #8b5cf6); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; color: #fff; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+        .profile-text h1 { font-size: 1.25rem; font-weight: 700; margin: 0; color: #ffffff; letter-spacing: -0.5px; }
+        .profile-text p { font-size: 0.85rem; margin: 4px 0 0 0; color: #a1a1aa; }
         
-        .btn-insta { background-color: #0095f6; color: white; border: none; padding: 9px 16px; font-size: 0.9rem; font-weight: 600; border-radius: 4px; cursor: pointer; text-align: center; display: inline-block; text-decoration: none; width: 100%; box-sizing: border-box; }
-        .btn-insta:hover { background-color: #1877f2; }
-        .btn-secondary-insta { background-color: #121212; color: #fff; border: 1px solid #363636; padding: 8px 14px; font-weight: 600; border-radius: 4px; cursor: pointer; text-decoration: none; font-size: 0.85rem; }
-        .btn-secondary-insta:hover { background-color: #262626; }
-        .btn-danger { background-color: #311111; color: #ff4757; border: 1px solid #521919; margin-top: 10px; width: 100%; }
+        .control-panel { background: #18181b; border: 1px solid #27272a; border-radius: 16px; padding: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 16px; }
+        .panel-title { font-size: 0.85rem; font-weight: 700; color: #3b82f6; text-transform: uppercase; letter-spacing: 1px; margin: 0; padding-bottom: 8px; border-bottom: 1px solid #27272a; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+        
+        .custom-select, .custom-input { background: #09090b; border: 1px solid #27272a; border-radius: 8px; padding: 10px 12px; color: #fff; font-size: 0.9rem; outline: none; transition: border 0.2s; width: 100%; box-sizing: border-box; }
+        
+        .btn-primary { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; border: none; padding: 12px; font-size: 0.9rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: opacity 0.2s; width: 100%; display: inline-block; text-align: center; text-decoration: none; box-sizing: border-box; }
+        .btn-vault { background: linear-gradient(135deg, #dc2626, #b91c1c); box-shadow: 0 0 15px rgba(220, 38, 38, 0.3); padding: 10px 16px; font-size: 0.85rem; font-weight: 600; color: white; border-radius: 8px; text-decoration: none; display: inline-block; }
+        .btn-danger { background: #27272a; color: #f43f5e; border: 1px solid #3f3f46; border-radius: 8px; padding: 10px; font-size: 0.85rem; font-weight: 600; cursor: pointer; width: 100%; margin-top: 5px; }
 
-        .progress-container { display: none; margin-top: 15px; background: #262626; border-radius: 4px; overflow: hidden; position: relative; height: 20px; }
-        .progress-bar-fill { background: linear-gradient(45deg, #0095f6, #00a8ff); width: 0%; height: 100%; }
-        .progress-text { position: absolute; top: 0; left: 50%; transform: translateX(-50%); font-size: 0.75rem; font-weight: bold; color: #fff; line-height: 20px; }
+        .progress-box { display: none; background: #09090b; border: 1px solid #27272a; border-radius: 8px; padding: 12px; margin-top: 5px; position: relative; overflow: hidden; }
+        .progress-bar { background: linear-gradient(90deg, #3b82f6, #8b5cf6); width: 0%; height: 4px; position: absolute; bottom: 0; left: 0; transition: width 0.2s; }
+        .progress-info { display: flex; justify-content: space-between; font-size: 0.8rem; color: #a1a1aa; font-weight: 500; }
 
-        .insta-feed-tabs { display: flex; justify-content: center; gap: 20px; border-top: 1px solid #262626; margin-bottom: 25px; padding-top: 10px; flex-wrap: wrap; }
-        .tab-btn-insta { background: none; border: none; color: #8e8e8e; padding: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
-        .tab-btn-insta.active { color: #ffffff; border-bottom: 2px solid #ffffff; }
+        .drive-tabs { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 5px; }
+        .tab-item { background: #18181b; border: 1px solid #27272a; color: #a1a1aa; padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
+        .tab-item.active { background: #3b82f6; border-color: #3b82f6; color: #ffffff; }
 
-        .long-gallery-container { display: flex; flex-direction: column; gap: 35px; width: 100%; }
-        .grid-item-card { display: flex; flex-direction: column; background: #000000; border: 1px solid #262626; border-radius: 8px; overflow: hidden; position: relative; width: 100%; }
+        .stream-layout { display: flex; flex-direction: column; gap: 25px; width: 100%; }
+        .asset-card { background: #18181b; border: 1px solid #27272a; border-radius: 16px; overflow: hidden; position: relative; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         
-        .grid-item-box { position: relative; width: 100%; background-color: #0a0a0f; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer; touch-action: pan-y; }
-        .grid-item-box img, .grid-item-box video { width: 100%; height: auto; max-height: 75vh; object-fit: contain; pointer-events: none; }
+        .media-container { position: relative; width: 100%; background: #09090b; display: flex; align-items: center; justify-content: center; cursor: pointer; touch-action: pan-y; min-height: 150px; }
+        .media-container img, .media-container video { width: 100%; height: auto; max-height: 70vh; object-fit: contain; pointer-events: none; }
         
-        /* 👉 DOCUMENT ASSET STYLE */
-        .doc-box-view { padding: 40px 20px; background: linear-gradient(135deg, #1e1e24, #121215); border: 1px solid #262626; border-radius: 6px; width: 100%; box-sizing: border-box; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-        .doc-icon-svg { font-size: 3.5rem; }
-        .doc-filename { font-size: 1rem; font-weight: bold; color: #ffffff; word-break: break-all; max-width: 90%; }
-        .doc-download-label { font-size: 0.85rem; color: #0095f6; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .doc-luxury-box { padding: 45px 25px; background: linear-gradient(135deg, #1e293b, #0f172a); border-bottom: 1px solid #27272a; width: 100%; box-sizing: border-box; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+        .doc-badge { background: #3b82f6; color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .doc-title { font-size: 1.05rem; font-weight: 600; color: #ffffff; word-break: break-all; max-width: 85%; }
 
-        .close-icon { position: absolute; top: 12px; right: 12px; background: rgba(0, 0, 0, 0.7); color: white; border: 1px solid #363636; border-radius: 50%; width: 32px; height: 32px; font-weight: bold; cursor: pointer; z-index: 20; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; }
+        .delete-btn-badge { position: absolute; top: 12px; right: 12px; background: rgba(9, 9, 11, 0.75); color: #f43f5e; border: 1px solid #27272a; border-radius: 50%; width: 32px; height: 32px; font-size: 1.1rem; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center; }
         
-        .grid-item-footer { padding: 14px; background: #000000; border-top: 1px solid #1c1c1c; }
-        .stats-bar { font-size: 0.9rem; font-weight: bold; margin-bottom: 10px; color: #f5f5f5; display: flex; gap: 15px; }
-        .view-count-tag { color: #0095f6; display: flex; align-items: center; gap: 4px; }
+        .card-footer { padding: 16px; background: #18181b; }
+        .meta-metrics { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; font-weight: 600; color: #3b82f6; margin-bottom: 12px; }
         
-        .comments-tray { max-height: 80px; overflow-y: auto; font-size: 0.85rem; color: #c7c7c7; margin-bottom: 12px; border-bottom: 1px solid #121212; padding-bottom: 5px; }
-        .cmt-input-bar { display: flex; gap: 5px; }
-        .cmt-input-bar input { flex-grow: 1; background: transparent; border: none; border-bottom: 1px solid #262626; color: white; font-size: 0.85rem; outline: none; padding: 5px 0; }
-        .cmt-input-bar button { background: none; border: none; color: #0095f6; font-weight: 600; cursor: pointer; }
+        .comment-section { max-height: 90px; overflow-y: auto; font-size: 0.85rem; color: #d4d4d8; margin-bottom: 12px; border-bottom: 1px solid #27272a; padding-bottom: 8px; }
+        .comment-form { display: flex; gap: 8px; }
+        .comment-input { flex-grow: 1; background: #09090b; border: 1px solid #27272a; color: white; font-size: 0.85rem; outline: none; padding: 8px 12px; border-radius: 6px; }
+        .comment-submit { background: none; border: none; color: #3b82f6; font-weight: 700; cursor: pointer; }
 
-        .modal { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.98); align-items: center; justify-content: center; }
-        .modal-content { max-width: 95%; max-height: 85%; object-fit: contain; border-radius: 6px; }
-        .close-btn { position: absolute; top: 20px; right: 25px; color: #ffffff; font-size: 45px; font-weight: bold; cursor: pointer; }
+        .lightbox { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(9,9,11,0.98); align-items: center; justify-content: center; backdrop-filter: blur(8px); }
+        .lightbox-content { max-width: 95%; max-height: 85%; object-fit: contain; border-radius: 8px; }
+        .close-lightbox { position: absolute; top: 20px; right: 25px; color: #fff; font-size: 40px; font-weight: bold; cursor: pointer; }
+        
+        .loading-shimmer { background: linear-gradient(90deg, #18181b 25%, #27272a 50%, #18181b 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; width: 100%; height: 250px; display: flex; align-items: center; justify-content: center; color: #a1a1aa; font-size: 0.85rem; font-weight: 500; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 </head>
 <body>
-    <div class="insta-wrapper">
-        <div class="insta-profile-header">
-            <div class="profile-avatar-circle"><div class="profile-avatar-inner">Z</div></div>
-            <div class="profile-info-data">
-                <div class="profile-top-line">
-                    <h1>zerogram_public</h1>
-                    <a href="private.html" class="btn-secondary-insta">🔒 Go to Private Vault</a>
+    <div class="drive-container">
+        <!-- HEADER -->
+        <div class="premium-header">
+            <div class="profile-section">
+                <div class="avatar-glow">𝚉</div>
+                <div class="profile-text">
+                    <h1>zerogram_drive</h1>
+                    <p>Permanent Live Sync Partition</p>
                 </div>
-                <div style="color:#dbdbdb; font-size: 0.85rem; margin-top: 5px;"><span><strong>Cloud Cloud</strong> (Photos, Videos & Docs)</span></div>
+            </div>
+            <a href="private.html" class="btn-vault">🔒 Private Vault</a>
+        </div>
+
+        <!-- CONTROL PANEL -->
+        <div class="control-panel">
+            <h4 class="panel-title">Upload Asset Workspace</h4>
+            <form onsubmit="handleDriveUpload(event)">
+                <div class="form-row" style="margin-bottom: 12px;">
+                    <div>
+                        <label style="font-size:0.75rem; color:#a1a1aa; font-weight:600; display:block; margin-bottom:5px;">Target Directory</label>
+                        <select id="target_gallery_select" class="custom-select"></select>
+                    </div>
+                    <div>
+                        <label style="font-size:0.75rem; color:#a1a1aa; font-weight:600; display:block; margin-bottom:5px;">Select System Files</label>
+                        <input type="file" id="insta_file_input" class="custom-input" multiple required style="padding: 7px 10px;">
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Execute Cloud Push</button>
+            </form>
+            <div class="progress-box" id="p_container">
+                <div class="progress-info">
+                    <span id="p_text">Uploading Data...</span>
+                    <span id="p_percent">0%</span>
+                </div>
+                <div class="progress-bar" id="p_fill"></div>
             </div>
         </div>
 
-        <div class="insta-controls-grid">
-            <div class="control-card-box">
-                <h3>Share Public Post</h3>
-                <form onsubmit="handleBatchUpload(event)">
-                    <div class="form-group">
-                        <label>Select Folder</label>
-                        <select id="target_gallery_select"></select>
-                    </div>
-                    <div class="form-group">
-                        <input type="file" id="insta_file_input" multiple required>
-                    </div>
-                    <button type="submit" class="btn-insta">Upload to Feed</button>
-                </form>
-                <div class="progress-container" id="p_container">
-                    <div class="progress-bar-fill" id="p_fill"></div>
-                    <div class="progress-text" id="p_text">0%</div>
-                </div>
+        <!-- DIRECTORY CONTROL -->
+        <div class="control-panel" style="padding: 15px; margin-bottom: 20px;">
+            <h4 class="panel-title" style="margin-bottom:10px;">Directory Management</h4>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="new_folder_input" class="custom-input" placeholder="Create new cluster...">
+                <button type="button" class="btn-primary" onclick="createNewFolder()" style="width:auto; padding:0 20px;">Create</button>
             </div>
-
-            <div class="control-card-box">
-                <h3>Settings</h3>
-                <input type="text" id="new_folder_input" placeholder="New folder name..." style="background: #000; border: 1px solid #363636; padding: 9px; color: white; border-radius: 4px; font-size: 0.9rem; width: 100%; box-sizing: border-box; margin-bottom: 10px;">
-                <button type="button" class="btn-insta" onclick="createNewFolder()" style="margin-bottom:5px;">Create Folder</button>
-                <button type="button" class="btn-insta btn-danger" onclick="wipeLocalDatabase()">Wipe Local Database</button>
-            </div>
+            <button type="button" class="btn-danger" onclick="wipeLocalDatabase()">Purge Client Storage Cache</button>
         </div>
 
-        <div class="insta-feed-tabs" id="folder_tabs_bar"></div>
-
-        <div class="long-gallery-container" id="feed_grid_display"></div>
+        <div class="drive-tabs" id="folder_tabs_bar"></div>
+        <div class="stream-layout" id="feed_grid_display"></div>
     </div>
 
-    <div id="photoModal" class="modal" onclick="closeView()">
-        <span class="close-btn" onclick="closeView()">&times;</span>
-        <img class="modal-content" id="fullImage" style="display:none;" onclick="event.stopPropagation()">
-        <video class="modal-content" id="fullVideo" controls style="display:none;" onclick="event.stopPropagation()"></video>
+    <!-- LIGHTBOX -->
+    <div id="photoModal" class="lightbox" onclick="closeView()">
+        <span class="close-lightbox" onclick="closeView()">&times;</span>
+        <img class="lightbox-content" id="fullImage" style="display:none;" onclick="event.stopPropagation()">
+        <video class="lightbox-content" id="fullVideo" controls style="display:none;" onclick="event.stopPropagation()"></video>
     </div>
 
     <script>
         const BOT_TOKEN = "8877412628:AAHeZgC78XtddVqrg-Z75401IUCVRnQgH4c";
-        const CHANNEL_ID = "-1004438175078";
 
         let store = JSON.parse(localStorage.getItem('zerogram_db')) || {
             folders: ["Main Gallery", "Samsung", "System_E"],
@@ -124,12 +130,30 @@
             items: []
         };
 
+        // Cache resolution dictionary for runtime paths
+        let resolvedUrls = {};
+
         function saveToStorage() {
             localStorage.setItem('zerogram_db', JSON.stringify(store));
             renderUI();
         }
 
-        function renderUI() {
+        // 👉 DYNAMIC LIVE PATH RECOVERY SYSTEM (Fixes expired link issue)
+        async function fetchLiveUrl(fileId) {
+            if (resolvedUrls[fileId]) return resolvedUrls[fileId];
+            try {
+                let r = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${fileId}`);
+                let fileInfo = await r.json();
+                if (fileInfo.ok) {
+                    let path = `https://api.telegram.org/file/bot${BOT_TOKEN}/${fileInfo.result.file_path}`;
+                    resolvedUrls[fileId] = path;
+                    return path;
+                }
+            } catch (e) { console.error("Link renewal failed", e); }
+            return null;
+        }
+
+        async function renderUI() {
             const tabsBar = document.getElementById("folder_tabs_bar");
             const selectDropdown = document.getElementById("target_gallery_select");
             tabsBar.innerHTML = "";
@@ -137,7 +161,7 @@
 
             store.folders.forEach(folder => {
                 const isActive = folder === store.activeFolder;
-                tabsBar.innerHTML += `<button class="tab-btn-insta ${isActive ? 'active' : ''}" onclick="switchFolder('${folder}')">• ${folder.toUpperCase()}</button>`;
+                tabsBar.innerHTML += `<button class="tab-item ${isActive ? 'active' : ''}" onclick="switchFolder('${folder}')">${folder.toUpperCase()}</button>`;
                 selectDropdown.innerHTML += `<option value="${folder}" ${folder === store.activeFolder ? 'selected' : ''}>${folder}</option>`;
             });
 
@@ -147,46 +171,65 @@
             const activeItems = store.items.filter(item => item.folder === store.activeFolder && !item.isPrivate);
 
             if (activeItems.length === 0) {
-                grid.innerHTML = `<div style="text-align:center; padding:40px; color:#8e8e8e;">No Public Posts Yet.</div>`;
+                grid.innerHTML = `<div style="text-align:center; padding:40px; color:#71717a; font-size:0.9rem;">Directory Empty.</div>`;
                 return;
             }
 
+            // Render placeholders/shimmers first
             activeItems.forEach(item => {
-                let mediaHTML = "";
-                
-                // 👉 DETECT ASSET TYPE TYPE
-                if (item.isDoc) {
-                    mediaHTML = `
-                        <div class="doc-box-view">
-                            <div class="doc-icon-svg">📄</div>
-                            <div class="doc-filename">${item.docName || 'Document File'}</div>
-                            <div class="doc-download-label">📥 Click to Download Asset</div>
-                        </div>`;
-                } else if (item.isVideo) {
-                    mediaHTML = `<video src="${item.url}" muted loop playsinline></video>`;
-                } else {
-                    mediaHTML = `<img src="${item.url}">`;
-                }
-
-                let commentsHTML = (item.comments || []).map(c => `<div style="margin-bottom:4px;"><strong>@user:</strong> ${c}</div>`).join('');
-                let totalViews = item.views || 0;
-
                 grid.innerHTML += `
-                    <div class="grid-item-card">
-                        <button class="close-icon" onclick="deleteItem(event, '${item.id}')">&times;</button>
-                        <div class="grid-item-box" onclick="registerViewAndOpen('${item.id}', '${item.url}', ${item.isVideo || false}, ${item.isDoc || false})">${mediaHTML}</div>
-                        <div class="grid-item-footer">
-                            <div class="stats-bar">
-                                <span class="view-count-tag">👁️ ${totalViews} views</span>
+                    <div class="asset-card" id="card-${item.id}">
+                        <button class="delete-btn-badge" onclick="deleteItem(event, '${item.id}')">&times;</button>
+                        <div class="media-container" id="media-box-${item.id}">
+                            <div class="loading-shimmer">🔄 Syncing Secure Token Path...</div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="meta-metrics">
+                                <span>👁️ ${item.views || 0} System Hits</span>
+                                <span style="color:#a1a1aa; font-weight:500;">ID: ${item.id.split('_')[2] || 'Asset'}</span>
                             </div>
-                            <div class="comments-tray">${commentsHTML}</div>
-                            <div class="cmt-input-bar">
-                                <input type="text" placeholder="Add a comment..." id="input-${item.id}">
-                                <button onclick="addComment('${item.id}')">Post</button>
+                            <div class="comment-section" id="comments-${item.id}"></div>
+                            <div class="comment-form">
+                                <input type="text" class="comment-input" placeholder="Append log comment..." id="input-${item.id}">
+                                <button class="comment-submit" onclick="addComment('${item.id}')">Post</button>
                             </div>
                         </div>
                     </div>`;
+                
+                // Render text comments logs
+                let cBox = document.getElementById(`comments-${item.id}`);
+                cBox.innerHTML = (item.comments || []).map(c => `<div style="margin-bottom:5px;"><strong>@root:</strong> ${c}</div>`).join('');
             });
+
+            // Asynchronously lazy load live dynamic paths securely
+            for (let item of activeItems) {
+                let liveUrl = await fetchLiveUrl(item.fileId);
+                let mediaBox = document.getElementById(`media-box-${item.id}`);
+                
+                if (!mediaBox) continue;
+
+                if (!liveUrl) {
+                    mediaBox.innerHTML = `<div style="padding:30px; color:#f43f5e; font-size:0.85rem; font-weight:600;">⚠️ Pipeline connection dropped. Upload again.</div>`;
+                    continue;
+                }
+
+                let innerHTML = "";
+                if (item.isDoc) {
+                    innerHTML = `
+                        <div class="doc-luxury-box">
+                            <div class="doc-badge">Document</div>
+                            <div class="doc-title">${item.docName || 'Asset Link'}</div>
+                            <div style="font-size:0.85rem; color:#60a5fa; font-weight:500;">📥 Secure Download Protocol</div>
+                        </div>`;
+                } else if (item.isVideo) {
+                    innerHTML = `<video src="${liveUrl}" muted loop playsinline></video>`;
+                } else {
+                    innerHTML = `<img src="${liveUrl}">`;
+                }
+                
+                mediaBox.innerHTML = innerHTML;
+                mediaBox.onclick = () => registerViewAndOpen(item.id, liveUrl, item.isVideo || false, item.isDoc || false);
+            }
         }
 
         function registerViewAndOpen(id, url, isVideo, isDoc) {
@@ -194,15 +237,11 @@
             if (item) {
                 item.views = (item.views || 0) + 1;
                 localStorage.setItem('zerogram_db', JSON.stringify(store));
+                // Update specific text inside document frame layout instantly
                 renderUI();
             }
-            
-            if (isDoc) {
-                // If document, open directly in new window to download
-                window.open(url, '_blank');
-            } else {
-                openView(url, isVideo);
-            }
+            if (isDoc) { window.open(url, '_blank'); } 
+            else { openView(url, isVideo); }
         }
 
         function openView(url, isVideo) {
@@ -235,7 +274,7 @@
             }
         }
 
-        async function handleBatchUpload(event) {
+        async function handleDriveUpload(event) {
             event.preventDefault();
             const fileInput = document.getElementById("insta_file_input");
             const selectedFolder = document.getElementById("target_gallery_select").value;
@@ -246,29 +285,32 @@
             const pContainer = document.getElementById("p_container");
             const pFill = document.getElementById("p_fill");
             const pText = document.getElementById("p_text");
+            const pPercent = document.getElementById("p_percent");
 
             pContainer.style.display = "block";
 
             for (let i = 0; i < total; i++) {
                 const file = files[i];
-                pText.innerText = `Syncing ${i + 1}/${total}`;
+                pText.innerText = `Syncing [${i + 1}/${total}]...`;
                 
-                // Determine file classification type
                 const isPhoto = file.type.startsWith('image/');
                 const isVideo = file.type.startsWith('video/');
                 const isDoc = !isPhoto && !isVideo;
 
                 try {
-                    const directUrl = await uploadToTelegramEngine(file, isPhoto, isVideo, (percent) => {
+                    let uploadRes = await uploadToTelegramEngine(file, isPhoto, isVideo, (percent) => {
                         let overall = Math.round(((i / total) * 100) + (percent / total));
                         pFill.style.width = overall + "%";
+                        pPercent.innerText = overall + "%";
                     });
 
-                    if (directUrl) {
+                    if (uploadRes && uploadRes.fileId) {
+                        resolvedUrls[uploadRes.fileId] = uploadRes.initialPath; // Cache early path url
+                        
                         store.items.unshift({
                             id: 'item_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
                             folder: selectedFolder,
-                            url: directUrl,
+                            fileId: uploadRes.fileId, // 👉 STORES PERMANENT FILE ID INDEX NOW
                             isVideo: isVideo,
                             isDoc: isDoc,
                             docName: file.name,
@@ -278,7 +320,7 @@
                         });
                     }
                 } catch (err) {
-                    alert(`Upload failed`);
+                    alert(`Network Pipeline Failure`);
                 }
             }
             pContainer.style.display = "none";
@@ -288,7 +330,7 @@
 
         function uploadToTelegramEngine(file, isPhoto, isVideo, progressCallback) {
             return new Promise((resolve, reject) => {
-                let method = "sendDocument"; // fallback document endpoint
+                let method = "sendDocument";
                 let paramName = "document";
 
                 if (isPhoto) { method = "sendPhoto"; paramName = "photo"; }
@@ -297,7 +339,7 @@
                 const url = `https://api.telegram.org/bot${BOT_TOKEN}/${method}`;
                 const xhr = new XMLHttpRequest();
                 const formData = new FormData();
-                formData.append("chat_id", CHANNEL_ID);
+                formData.append("chat_id", "-1004438175078");
                 formData.append(paramName, file);
 
                 xhr.upload.addEventListener("progress", (e) => {
@@ -317,8 +359,12 @@
                                 fetch(`https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${fileId}`)
                                     .then(r => r.json())
                                     .then(fileInfo => {
-                                        if (fileInfo.ok) resolve(`https://api.telegram.org/file/bot${BOT_TOKEN}/${fileInfo.result.file_path}`);
-                                        else resolve(null);
+                                        if (fileInfo.ok) {
+                                            resolve({
+                                                fileId: fileId,
+                                                initialPath: `https://api.telegram.org/file/bot${BOT_TOKEN}/${fileInfo.result.file_path}`
+                                            });
+                                        } else resolve(null);
                                     }).catch(() => resolve(null));
                             } else { resolve(null); }
                         } else { reject(xhr.statusText); }
@@ -330,7 +376,7 @@
 
         function deleteItem(event, id) {
             event.stopPropagation();
-            if (confirm("Delete this asset?")) {
+            if (confirm("Delete asset entry?")) {
                 store.items = store.items.filter(item => item.id !== id);
                 saveToStorage();
             }
@@ -349,7 +395,7 @@
         }
 
         function wipeLocalDatabase() {
-            if (confirm("Reset layout mappings?")) {
+            if (confirm("Execute master database wipe?")) {
                 localStorage.removeItem('zerogram_db');
                 store = { folders: ["Main Gallery", "Samsung", "System_E"], activeFolder: "Main Gallery", items: [] };
                 renderUI();
@@ -360,3 +406,4 @@
     </script>
 </body>
 </html>
+
